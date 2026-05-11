@@ -1,10 +1,10 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: tf-az-overlays-hubspoke
+  name: terraform-az-overlays-hubspoke
   description: Terraform overlay module for hub-spoke network topology
   annotations:
-    github.com/project-slug: POps-Rox/tf-az-overlays-hubspoke
+    github.com/project-slug: POps-Rox/terraform-az-overlays-hubspoke
     backstage.io/techdocs-ref: dir:.
   tags:
     - terraform
@@ -12,7 +12,7 @@ metadata:
     - azure
     - platform-ops
   links:
-    - url: https://github.com/POps-Rox/tf-az-overlays-hubspoke
+    - url: https://github.com/POps-Rox/terraform-az-overlays-hubspoke
       title: GitHub Repository
       icon: github
 spec:
