@@ -136,7 +136,7 @@ module "hub_spoke_landing_zone" {
         {
           name                  = "AllSpokeTraffic"
           protocols             = ["Any"]
-          source_addresses      = ["${var.firewall_supernet_IP_address}"]
+          source_addresses      = [var.firewall_supernet_IP_address]
           destination_addresses = ["*"]
           destination_ports     = ["*"]
         }

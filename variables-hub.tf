@@ -40,16 +40,19 @@ variable "hub_vnet_address_space" {
 }
 
 variable "create_ddos_plan" {
+  type        = bool
   description = "Create an ddos plan - Default is false"
   default     = false
 }
 
 variable "ddos_plan_name" {
+  type        = any
   description = "The name of AzureNetwork DDoS Protection Plan"
   default     = null
 }
 
 variable "create_network_watcher" {
+  type        = bool
   description = "Controls if Network Watcher resources should be created for the Azure subscription"
   default     = false
 }
@@ -71,11 +74,13 @@ variable "hub_subnet_service_endpoints" {
 }
 
 variable "hub_private_endpoint_network_policies_enabled" {
+  type        = any
   description = "Whether or not to enable network policies on the private endpoint subnet"
   default     = null
 }
 
 variable "hub_private_endpoint_service_endpoints_enabled" {
+  type        = any
   description = "Whether or not to enable service endpoints on the private endpoint subnet"
   default     = null
 }
@@ -93,6 +98,7 @@ variable "hub_add_subnets" {
 }
 
 variable "gateway_subnet_address_prefix" {
+  type        = any
   description = "The address prefix to use for the gateway subnet"
   default     = null
 }
@@ -104,6 +110,7 @@ variable "gateway_service_endpoints" {
 }
 
 variable "dns_servers" {
+  type        = any
   description = "List of dns servers to use for virtual network"
   default     = []
 }
@@ -113,19 +120,23 @@ variable "dns_servers" {
 ##############################
 
 variable "enable_firewall" {
+  type        = any
   description = "Controls if Azure Firewall resources should be created for the Azure subscription"
 }
 
 variable "enable_forced_tunneling" {
+  type        = any
   description = "Route all Internet-bound traffic to a designated next hop instead of going directly to the Internet"
 }
 
 variable "fw_client_snet_address_prefix" {
+  type        = any
   description = "The address prefix to use for the Firewall subnet"
   default     = null
 }
 
 variable "fw_management_snet_address_prefix" {
+  type        = any
   description = "The address prefix to use for Firewall managemement subnet to enable forced tunnelling. The Management Subnet used for the Firewall must have the name `AzureFirewallManagementSubnet` and the subnet mask must be at least a `/26`."
   default     = null
 }
@@ -167,11 +178,13 @@ variable "fw_management_snet_private_link_service_network_policies_enabled" {
 }
 
 variable "fw_sku" {
+  type        = any
   description = "The SKU of the Azure Firewall"
   default     = null
 }
 
 variable "fw_tier" {
+  type        = any
   description = "The Tier of the Azure Firewall"
   default     = null
 }
@@ -195,6 +208,7 @@ variable "fw_dns_servers" {
 }
 
 variable "fw_intrusion_detection_mode" {
+  type        = string
   description = "Controls if Azure Firewall Intrusion Detection System (IDS) should be enabled for the Azure subscription"
   default     = "Alert"
 
@@ -205,6 +219,7 @@ variable "fw_intrusion_detection_mode" {
 }
 
 variable "fw_threat_intelligence_mode" {
+  type        = string
   description = "Controls if Azure Firewall Threat Intelligence should be enabled for the Azure subscription"
   default     = "Alert"
 
@@ -215,6 +230,7 @@ variable "fw_threat_intelligence_mode" {
 }
 
 variable "base_policy_id" {
+  type        = any
   description = "The ID of the base policy to use for the Azure Firewall. This is used to create a new policy based on the base policy."
   default     = null
 }
@@ -345,6 +361,7 @@ EOD
 
 
 variable "fw_policy_network_rule_collection" {
+  type = any
   default = [
     {
       name     = "AllowAzureCloud"
@@ -403,6 +420,7 @@ EOD
 }
 
 variable "fw_policy_nat_rule_collections" {
+  type        = any
   default     = {}
   description = <<EOD
     name     = nat_rule_collection1
@@ -629,6 +647,7 @@ variable "hub_allowed_cifs_source" {
 ##################################
 
 variable "security_center_subscription_pricing" {
+  type        = string
   description = "The pricing tier to use. Possible values are Free and Standard"
   default     = "Standard"
 }
@@ -640,21 +659,25 @@ variable "security_center_contacts" {
 }
 
 variable "scope_resource_id" {
+  type        = any
   description = "The scope of VMs to send their security data to the desired workspace, unless overridden by a setting with more specific scope"
   default     = null
 }
 
 variable "security_center_setting_name" {
+  type        = string
   description = "The setting to manage. Possible values are `MCAS` and `WDAT`"
   default     = "MCAS"
 }
 
 variable "enable_security_center_setting" {
+  type        = bool
   description = "Boolean flag to enable/disable data access"
   default     = false
 }
 
 variable "enable_security_center_auto_provisioning" {
+  type        = string
   description = "Should the security agent be automatically provisioned on Virtual Machines in this subscription?"
   default     = "Off"
 }

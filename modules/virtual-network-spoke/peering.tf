@@ -6,7 +6,7 @@
 #-----------------------------------------------
 resource "azurerm_virtual_network_peering" "spoke_to_hub" {
   name                         = lower("peering-${azurerm_virtual_network.spoke_vnet.name}-to-${element(split("/", var.hub_virtual_network_id), 8)}")
-  resource_group_name          = module.mod_spoke_rg.0.resource_group_name
+  resource_group_name          = module.mod_spoke_rg[0].resource_group_name
   virtual_network_name         = azurerm_virtual_network.spoke_vnet.name
   remote_virtual_network_id    = var.hub_virtual_network_id
   allow_virtual_network_access = var.allow_virtual_spoke_network_access

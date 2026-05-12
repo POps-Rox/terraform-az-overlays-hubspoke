@@ -16,8 +16,8 @@ resource "azurerm_virtual_network" "hub_vnet" {
     module.mod_hub_rg
   ]
   name                = local.hub_vnet_name
-  location            = module.mod_hub_rg.0.resource_group_location
-  resource_group_name = module.mod_hub_rg.0.resource_group_name
+  location            = module.mod_hub_rg[0].resource_group_location
+  resource_group_name = module.mod_hub_rg[0].resource_group_name
   address_space       = var.virtual_network_address_space
   dns_servers         = var.dns_servers
   tags                = merge({ "ResourceName" = format("%s", local.hub_vnet_name) }, var.tags, )
@@ -39,7 +39,7 @@ resource "azurerm_virtual_network" "hub_vnet" {
 resource "azurerm_network_ddos_protection_plan" "ddos" {
   count               = var.create_ddos_plan ? 1 : 0
   name                = var.ddos_plan_name
-  resource_group_name = module.mod_hub_rg.0.resource_group_name
+  resource_group_name = module.mod_hub_rg[0].resource_group_name
   location            = var.location
   tags                = merge({ "ResourceName" = format("%s", var.ddos_plan_name) }, var.tags, )
 }
@@ -58,6 +58,6 @@ resource "azurerm_network_watcher" "nwatcher" {
   count               = var.create_network_watcher != false ? 1 : 0
   name                = "NetworkWatcher_${var.location}"
   location            = var.location
-  resource_group_name = azurerm_resource_group.nwatcher.0.name
+  resource_group_name = azurerm_resource_group.nwatcher[0].name
   tags                = merge({ "ResourceName" = format("%s", "NetworkWatcher_${var.location}") }, var.tags, )
 }

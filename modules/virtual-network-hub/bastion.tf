@@ -26,7 +26,7 @@ resource "random_string" "str" {
 resource "azurerm_subnet" "abs_snet" {
   count                = (var.enable_bastion_host && var.azure_bastion_subnet_address_prefix != null) ? 1 : 0
   name                 = "AzureBastionSubnet"
-  resource_group_name  = module.mod_hub_rg.0.resource_group_name
+  resource_group_name  = module.mod_hub_rg[0].resource_group_name
   virtual_network_name = azurerm_virtual_network.hub_vnet.name
   address_prefixes     = var.azure_bastion_subnet_address_prefix
 }
@@ -37,8 +37,8 @@ resource "azurerm_subnet" "abs_snet" {
 resource "azurerm_public_ip" "bastion_pip" {
   count               = var.enable_bastion_host ? 1 : 0
   name                = local.bastion_pip_name
-  location            = module.mod_hub_rg.0.resource_group_location
-  resource_group_name = module.mod_hub_rg.0.resource_group_name
+  location            = module.mod_hub_rg[0].resource_group_location
+  resource_group_name = module.mod_hub_rg[0].resource_group_name
   allocation_method   = var.azure_bastion_public_ip_allocation_method
   sku                 = var.azure_bastion_public_ip_sku
   domain_name_label   = var.domain_name_label != null ? var.domain_name_label : format("gw%s%s", lower(replace(local.bastion_pip_name, "/[[:^alnum:]]/", "")), random_string.str.result)
@@ -58,8 +58,8 @@ resource "azurerm_public_ip" "bastion_pip" {
 resource "azurerm_bastion_host" "main" {
   count                  = var.enable_bastion_host ? 1 : 0
   name                   = local.bastion_name
-  location               = module.mod_hub_rg.0.resource_group_location
-  resource_group_name    = module.mod_hub_rg.0.resource_group_name
+  location               = module.mod_hub_rg[0].resource_group_location
+  resource_group_name    = module.mod_hub_rg[0].resource_group_name
   copy_paste_enabled     = var.enable_copy_paste
   file_copy_enabled      = var.azure_bastion_host_sku == "Standard" ? var.enable_file_copy : null
   sku                    = var.azure_bastion_host_sku
@@ -71,8 +71,8 @@ resource "azurerm_bastion_host" "main" {
 
   ip_configuration {
     name                 = "${lower(local.bastion_name)}-network"
-    subnet_id            = azurerm_subnet.abs_snet.0.id
-    public_ip_address_id = azurerm_public_ip.bastion_pip.0.id
+    subnet_id            = azurerm_subnet.abs_snet[0].id
+    public_ip_address_id = azurerm_public_ip.bastion_pip[0].id
   }
 }
 
@@ -82,8 +82,8 @@ resource "azurerm_bastion_host" "main" {
 /* resource "azurerm_virtual_machine" "jumpbox" {
   count                  = var.enable_bastion_host ? 1 : 0
   name                   = local.jumpbox_name
-  location               = module.mod_hub_rg.0.resource_group_location
-  resource_group_name    = module.mod_hub_rg.0.resource_group_name
+  location               = module.mod_hub_rg[0].resource_group_location
+  resource_group_name    = module.mod_hub_rg[0].resource_group_name
   network_interface_ids  = [azurerm_network_interface.jumpbox_nic.id]
   vm_size                = var.jumpbox_vm_size
   delete_os_disk_on_termination = true

@@ -17,6 +17,7 @@ variable "route_table_routes" {
 }
 
 variable "disable_bgp_route_propagation" {
+  type        = bool
   description = "Whether to disable the default BGP route propagation on the subnet"
   default     = false
 }

@@ -6,9 +6,9 @@ resource "azurerm_private_endpoint" "subnet_private_endpoint" {
     azurerm_monitor_private_link_scoped_service.laws_pls
   ]
   name     = local.privateLinkEndpointName
-  location = module.mod_logging_rg.0.resource_group_location
+  location = module.mod_logging_rg[0].resource_group_location
 
-  resource_group_name = module.mod_logging_rg.0.resource_group_name
+  resource_group_name = module.mod_logging_rg[0].resource_group_name
 
   subnet_id = var.private_endpoint_subnet_id
 

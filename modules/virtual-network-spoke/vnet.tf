@@ -16,8 +16,8 @@ resource "azurerm_virtual_network" "spoke_vnet" {
     module.mod_spoke_rg
   ]
   name                = local.spoke_vnet_name
-  location            = module.mod_spoke_rg.0.resource_group_location
-  resource_group_name = module.mod_spoke_rg.0.resource_group_name
+  location            = module.mod_spoke_rg[0].resource_group_location
+  resource_group_name = module.mod_spoke_rg[0].resource_group_name
   address_space       = var.virtual_network_address_space
   dns_servers         = var.dns_servers
   tags                = merge({ "ResourceName" = format("%s", local.spoke_vnet_name) }, var.tags, )
@@ -42,6 +42,6 @@ resource "azurerm_network_watcher" "nwatcher" {
   count               = var.is_spoke_deployed_to_same_hub_subscription == false ? 1 : 0
   name                = "NetworkWatcher_${var.location}"
   location            = var.location
-  resource_group_name = azurerm_resource_group.nwatcher.0.name
+  resource_group_name = azurerm_resource_group.nwatcher[0].name
   tags                = merge({ "ResourceName" = format("%s", "NetworkWatcher_${var.location}") }, var.tags, )
 }

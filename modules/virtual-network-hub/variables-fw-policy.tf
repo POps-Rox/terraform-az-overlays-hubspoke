@@ -70,6 +70,7 @@ EOD
 
 
 variable "network_rule_collection" {
+  type        = any
   default     = {}
   description = <<EOD
     network_rule_collections = [
@@ -99,6 +100,7 @@ EOD
 }
 
 variable "nat_rule_collections" {
+  type        = any
   default     = {}
   description = <<EOD
     name     = nat_rule_collection1

@@ -5,7 +5,7 @@ resource "azurerm_network_security_rule" "nsg_rule" {
   for_each                    = { for index, v in var.additional_rules : v.name => v }
   name                        = each.value.name
   network_security_group_name = azurerm_network_security_group.nsg.name
-  resource_group_name         = module.mod_hub_rg.0.resource_group_name
+  resource_group_name         = module.mod_hub_rg[0].resource_group_name
 
   priority  = each.value.priority
   direction = coalesce(each.value.direction, "Inbound")

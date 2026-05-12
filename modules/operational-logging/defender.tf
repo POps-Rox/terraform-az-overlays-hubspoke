@@ -6,7 +6,7 @@
 #----------------------------------------------------------
 data "azurerm_log_analytics_workspace" "logws" {
   name                = azurerm_log_analytics_workspace.loganalytics.name
-  resource_group_name = module.mod_logging_rg.0.resource_group_name
+  resource_group_name = module.mod_logging_rg[0].resource_group_name
 }
 
 #----------------------------------------------------------

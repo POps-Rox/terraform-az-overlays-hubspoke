@@ -23,6 +23,7 @@ variable "ops_subscription_id" {
 }
 
 variable "is_ops_deployed_to_same_hub_subscription" {
+  type        = bool
   description = "Indicates if the ops is deployed to the same subscription as the hub. Default is true."
   default     = true
 }
@@ -32,6 +33,7 @@ variable "is_ops_deployed_to_same_hub_subscription" {
 ##########################
 
 variable "ops_virtual_network_address_space" {
+  type        = any
   description = "The address space to be used for the Azure virtual network."
   default     = []
 }
@@ -41,21 +43,25 @@ variable "ops_virtual_network_address_space" {
 ##########################
 
 variable "ops_subnet_address_prefix" {
+  type        = any
   description = "The address prefix to use for the subnet"
   default     = null
 }
 
 variable "ops_subnet_service_endpoints" {
+  type        = any
   description = "Service endpoints to add to the subnet"
   default     = null
 }
 
 variable "ops_subnet_private_endpoint_network_policies_enabled" {
+  type        = any
   description = "Enable or disable private endpoint network policies on the subnet"
   default     = null
 }
 
 variable "ops_subnet_private_link_service_network_policies_enabled" {
+  type        = any
   description = "Enable or disable private link service network policies on the subnet"
   default     = null
 }
@@ -77,6 +83,7 @@ variable "ops_additional_subnets" {
 ##############################
 
 variable "ops_routetable_custom_name" {
+  type        = any
   description = "(Optional) Specifies the custom name of the route table. If not specified, the default naming is used"
   default     = null
 }

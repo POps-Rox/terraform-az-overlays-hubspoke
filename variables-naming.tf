@@ -96,6 +96,7 @@ variable "ops_logging_sa_custom_name" {
 
 # Custom Ops Logging naming override
 variable "custom_ops_vnet_name" {
+  type        = any
   description = "(Optional) Specifies the custom name of the vnet for the ops vnet. If not specified, the default naming is used"
   default     = null
 }

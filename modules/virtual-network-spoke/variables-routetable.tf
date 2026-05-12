@@ -17,11 +17,13 @@ variable "route_table_routes" {
 }
 
 variable "disable_bgp_route_propagation" {
+  type        = bool
   description = "Whether to disable the default BGP route propagation on the subnet"
   default     = false
 }
 
 variable "enable_forced_tunneling_on_route_table" {
+  type        = bool
   description = "Route all Internet-bound traffic to a designated next hop instead of going directly to the Internet"
   default     = false
 }
