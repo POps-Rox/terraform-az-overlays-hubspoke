@@ -63,7 +63,20 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: Run TFLint
-        run: tflint --recursive --format compact --minimum-failure-severity=error
+        run: |
+          set -eo pipefail
+          # Lint root + each module/example dir, but skip _wip work-in-progress dirs.
+          DIRS=$(find . -name '*.tf' \
+            -not -path './.terraform/*' \
+            -not -path './.git/*' \
+            -not -path './_wip/*' \
+            -exec dirname {} \; | sort -u)
+          failed=0
+          for d in $DIRS; do
+            echo "=== $d ==="
+            (cd "$d" && tflint --format compact --minimum-failure-severity=error) || failed=$?
+          done
+          exit $failed
 
   terraform-plan:
     name: "📋 Plan (Validation)"

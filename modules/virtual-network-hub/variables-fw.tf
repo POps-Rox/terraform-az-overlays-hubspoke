@@ -6,21 +6,25 @@
 ##############################
 
 variable "enable_firewall" {
+  type        = bool
   description = "Controls if Azure Firewall resources should be created for the Azure subscription"
   default     = true
 }
 
 variable "enable_forced_tunneling" {
+  type        = bool
   description = "Route all Internet-bound traffic to a designated next hop instead of going directly to the Internet"
   default     = true
 }
 
 variable "fw_client_snet_address_prefix" {
+  type        = any
   description = "The address prefix to use for the Firewall subnet"
   default     = null
 }
 
 variable "fw_management_snet_address_prefix" {
+  type        = any
   description = "The address prefix to use for Firewall managemement subnet to enable forced tunnelling. The Management Subnet used for the Firewall must have the name `AzureFirewallManagementSubnet` and the subnet mask must be at least a `/26`."
   default     = null
 }
@@ -62,6 +66,7 @@ variable "fw_management_snet_private_link_service_network_policies_enabled" {
 }
 
 variable "fw_intrusion_detection_mode" {
+  type        = string
   description = "Controls if Azure Firewall Intrusion Detection System (IDS) should be enabled for the Azure subscription"
   default     = "Alert"
 
@@ -72,6 +77,7 @@ variable "fw_intrusion_detection_mode" {
 }
 
 variable "fw_threat_intelligence_mode" {
+  type        = string
   description = "Controls if Azure Firewall Threat Intelligence should be enabled for the Azure subscription"
   default     = "Alert"
 
@@ -82,6 +88,7 @@ variable "fw_threat_intelligence_mode" {
 }
 
 variable "base_policy_id" {
+  type        = any
   description = "The ID of the base policy to use for the Azure Firewall. This is used to create a new policy based on the base policy."
   default     = null
 }

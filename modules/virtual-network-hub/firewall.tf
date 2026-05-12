@@ -11,7 +11,7 @@
 resource "azurerm_subnet" "fw_client_snet" {
   count                = var.enable_firewall ? 1 : 0
   name                 = "AzureFirewallSubnet"
-  resource_group_name  = module.mod_hub_rg.0.resource_group_name
+  resource_group_name  = module.mod_hub_rg[0].resource_group_name
   virtual_network_name = azurerm_virtual_network.hub_vnet.name
   address_prefixes     = var.fw_client_snet_address_prefix
   service_endpoints    = var.fw_client_snet_service_endpoints
@@ -28,7 +28,7 @@ resource "azurerm_subnet" "fw_client_snet" {
 resource "azurerm_subnet" "fw_management_snet" {
   count                = (var.enable_forced_tunneling && var.fw_management_snet_address_prefix != null) ? 1 : 0
   name                 = "AzureFirewallManagementSubnet"
-  resource_group_name  = module.mod_hub_rg.0.resource_group_name
+  resource_group_name  = module.mod_hub_rg[0].resource_group_name
   virtual_network_name = azurerm_virtual_network.hub_vnet.name
   address_prefixes     = var.fw_management_snet_address_prefix
   service_endpoints    = var.fw_management_snet_service_endpoints
@@ -43,8 +43,8 @@ resource "azurerm_subnet" "fw_management_snet" {
 resource "azurerm_public_ip_prefix" "fw-pref" {
   count               = var.enable_firewall ? 1 : 0
   name                = lower("${local.hub_fw_name}-prefix")
-  resource_group_name = module.mod_hub_rg.0.resource_group_name
-  location            = module.mod_hub_rg.0.resource_group_location
+  resource_group_name = module.mod_hub_rg[0].resource_group_name
+  location            = module.mod_hub_rg[0].resource_group_location
   prefix_length       = 30
   tags                = merge({ "ResourceName" = lower("${local.hub_fw_name}-prefix") }, var.tags, )
 }
@@ -52,8 +52,8 @@ resource "azurerm_public_ip_prefix" "fw-pref" {
 resource "azurerm_public_ip" "firewall_client_pip" {
   count               = var.enable_firewall ? 1 : 0
   name                = local.hub_fw_client_pip_name
-  location            = module.mod_hub_rg.0.resource_group_location
-  resource_group_name = module.mod_hub_rg.0.resource_group_name
+  location            = module.mod_hub_rg[0].resource_group_location
+  resource_group_name = module.mod_hub_rg[0].resource_group_name
   allocation_method   = var.fw_pip_allocation_method
   sku                 = var.fw_pip_sku
   tags                = var.tags
@@ -62,8 +62,8 @@ resource "azurerm_public_ip" "firewall_client_pip" {
 resource "azurerm_public_ip" "firewall_management_pip" {
   count               = var.enable_forced_tunneling ? 1 : 0
   name                = local.hub_fw_mgt_pip_name
-  location            = module.mod_hub_rg.0.resource_group_location
-  resource_group_name = module.mod_hub_rg.0.resource_group_name
+  location            = module.mod_hub_rg[0].resource_group_location
+  resource_group_name = module.mod_hub_rg[0].resource_group_name
   allocation_method   = var.fw_pip_allocation_method
   sku                 = var.fw_pip_sku
   tags                = var.tags
@@ -75,8 +75,8 @@ resource "azurerm_public_ip" "firewall_management_pip" {
 resource "azurerm_firewall" "fw" {
   count               = var.enable_firewall ? 1 : 0
   name                = local.hub_fw_name
-  resource_group_name = module.mod_hub_rg.0.resource_group_name
-  location            = module.mod_hub_rg.0.resource_group_location
+  resource_group_name = module.mod_hub_rg[0].resource_group_name
+  location            = module.mod_hub_rg[0].resource_group_location
   sku_name            = var.firewall_config.sku_name
   sku_tier            = var.firewall_config.sku_tier
   firewall_policy_id  = azurerm_firewall_policy.firewallpolicy.id
@@ -88,15 +88,15 @@ resource "azurerm_firewall" "fw" {
 
   ip_configuration {
     name                 = lower("${local.hub_fw_name}-ipconfig")
-    subnet_id            = azurerm_subnet.fw_client_snet.0.id
-    public_ip_address_id = azurerm_public_ip.firewall_client_pip.0.id
+    subnet_id            = azurerm_subnet.fw_client_snet[0].id
+    public_ip_address_id = azurerm_public_ip.firewall_client_pip[0].id
   }
 
   dynamic "management_ip_configuration" {
     for_each = var.enable_forced_tunneling ? [1] : []
     content {
       name                 = lower("${local.hub_fw_name}-forced-tunnel")
-      subnet_id            = azurerm_subnet.fw_management_snet.0.id
+      subnet_id            = azurerm_subnet.fw_management_snet[0].id
       public_ip_address_id = azurerm_public_ip.firewall_management_pip[0].id
     }
   }

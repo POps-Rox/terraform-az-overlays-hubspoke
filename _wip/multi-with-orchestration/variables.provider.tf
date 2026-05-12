@@ -2,6 +2,7 @@
 # Licensed under the MIT License.
 
 variable "provider_azurerm_features_keyvault" {
+  type = any
   default = {
     permanently_delete_on_destroy              = true
     purge_soft_delete_on_destroy               = true
@@ -16,12 +17,14 @@ variable "provider_azurerm_features_keyvault" {
 }
 
 variable "provider_azurerm_features_log_analytics_workspace" {
+  type = any
   default = {
     permanently_delete_on_destroy = true
   }
 }
 
 variable "provider_azurerm_features_virtual_machine" {
+  type = any
   default = {
     delete_os_disk_on_deletion     = true
     graceful_shutdown              = false
@@ -30,6 +33,7 @@ variable "provider_azurerm_features_virtual_machine" {
 }
 
 variable "provider_azurerm_features_resource_group" {
+  type = any
   default = {
     prevent_deletion_if_contains_resources = true
   }

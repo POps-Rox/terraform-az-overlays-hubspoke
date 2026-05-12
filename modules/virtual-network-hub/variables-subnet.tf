@@ -18,11 +18,13 @@ variable "hub_subnet_service_endpoints" {
 }
 
 variable "hub_private_endpoint_network_policies_enabled" {
+  type        = any
   description = "Whether or not to enable network policies on the private endpoint subnet"
   default     = null
 }
 
 variable "hub_private_link_service_network_policies_enabled" {
+  type        = any
   description = "Whether or not to enable service endpoints on the private endpoint subnet"
   default     = null
 }
@@ -40,6 +42,7 @@ variable "add_subnets" {
 }
 
 variable "gateway_subnet_address_prefix" {
+  type        = any
   description = "The address prefix to use for the gateway subnet"
   default     = null
 }
@@ -51,11 +54,13 @@ variable "gateway_service_endpoints" {
 }
 
 variable "gateway_private_endpoint_network_policies_enabled" {
+  type        = any
   description = "Whether or not to enable network policies on the private endpoint gateway subnet"
   default     = null
 }
 
 variable "gateway_private_link_service_network_policies_enabled" {
+  type        = any
   description = "Whether or not to enable link service network policies on the private link service gateway subnet"
   default     = null
 }

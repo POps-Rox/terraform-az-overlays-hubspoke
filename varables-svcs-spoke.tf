@@ -40,6 +40,7 @@ variable "svcs_subscription_id" {
 }
 
 variable "is_svcs_deployed_to_same_hub_subscription" {
+  type        = bool
   description = "Indicates if the svcs is deployed to the same subscription as the hub. Default is true."
   default     = true
 }
@@ -49,11 +50,13 @@ variable "is_svcs_deployed_to_same_hub_subscription" {
 ##########################
 
 variable "custom_svcs_vnet_name" {
+  type        = any
   description = "(Optional) Specifies the custom name of the vnet for the svcs vnet. If not specified, the default naming is used"
   default     = null
 }
 
 variable "svcs_virtual_network_address_space" {
+  type        = any
   description = "The address space to be used for the Azure virtual network."
   default     = []
 }
@@ -63,21 +66,25 @@ variable "svcs_virtual_network_address_space" {
 ##########################
 
 variable "svcs_subnet_address_prefix" {
+  type        = any
   description = "The address prefix to use for the subnet"
   default     = null
 }
 
 variable "svcs_subnet_service_endpoints" {
+  type        = any
   description = "Service endpoints to add to the subnet"
   default     = null
 }
 
 variable "svcs_subnet_private_endpoint_network_policies_enabled" {
+  type        = any
   description = "Enable or disable private endpoint network policies on the subnet"
   default     = null
 }
 
 variable "svcs_subnet_private_link_service_network_policies_enabled" {
+  type        = any
   description = "Enable or disable private link service network policies on the subnet"
   default     = null
 }
@@ -99,6 +106,7 @@ variable "svcs_additional_subnets" {
 ##############################
 
 variable "svcs_routetable_custom_name" {
+  type        = any
   description = "(Optional) Specifies the custom name of the route table. If not specified, the default naming is used"
   default     = null
 }

@@ -68,16 +68,19 @@ variable "use_location_short_name" {
 ##########################
 
 variable "virtual_network_address_space" {
+  type        = any
   description = "The address space to be used for the Azure virtual network."
   default     = []
 }
 
 variable "dns_servers" {
+  type        = any
   description = "List of dns servers to use for virtual network"
   default     = []
 }
 
 variable "is_spoke_deployed_to_same_hub_subscription" {
+  type        = bool
   description = "Indicates if the spoke is deployed to the same subscription as the hub. Default is true."
   default     = true
 }

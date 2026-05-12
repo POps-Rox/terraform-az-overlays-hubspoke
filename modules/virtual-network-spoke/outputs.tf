@@ -18,12 +18,12 @@ output "virtual_network_id" {
 
 output "virtual_network_address_space" {
   description = "List of address spaces that are used the virtual network."
-  value       = element(coalescelist(azurerm_virtual_network.spoke_vnet.*.address_space, [""]), 0)
+  value       = element(coalescelist(azurerm_virtual_network.spoke_vnet[*].address_space, [""]), 0)
 }
 
 output "network_watcher_id" {
   description = "ID of Network Watcher"
-  value       = var.is_spoke_deployed_to_same_hub_subscription == false ? element(concat(azurerm_network_watcher.nwatcher.*.id, [""]), 0) : null
+  value       = var.is_spoke_deployed_to_same_hub_subscription == false ? element(concat(azurerm_network_watcher.nwatcher[*].id, [""]), 0) : null
 }
 
 output "nsg_id" {

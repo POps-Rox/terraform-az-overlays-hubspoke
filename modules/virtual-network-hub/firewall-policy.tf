@@ -6,8 +6,8 @@
 #----------------------------------------------
 resource "azurerm_firewall_policy" "firewallpolicy" {
   name                     = local.hub_fw_policy_name
-  resource_group_name      = module.mod_hub_rg.0.resource_group_name
-  location                 = module.mod_hub_rg.0.resource_group_location
+  resource_group_name      = module.mod_hub_rg[0].resource_group_name
+  location                 = module.mod_hub_rg[0].resource_group_location
   sku                      = var.firewall_config.sku_tier
   base_policy_id           = var.base_policy_id == null ? null : var.base_policy_id
   threat_intelligence_mode = var.fw_threat_intelligence_mode

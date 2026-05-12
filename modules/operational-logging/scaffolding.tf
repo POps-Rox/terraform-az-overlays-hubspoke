@@ -5,7 +5,7 @@
 # Azure Region Lookup
 #----------------------------------------------------------
 module "mod_azregions" {
-  source = "github.com/POps-Rox/terraform-az-overlays-azregionslookup"
+  source = "github.com/POps-Rox/terraform-az-overlays-azregionslookup?ref=v2.0.0"
 
   azure_region = var.location
 }
@@ -19,7 +19,7 @@ data "azurerm_resource_group" "logging_rgrp" {
 }
 
 module "mod_logging_rg" {
-  source = "github.com/POps-Rox/terraform-az-overlays-resourcegroup"
+  source = "github.com/POps-Rox/terraform-az-overlays-resourcegroup?ref=v2.0.0"
 
   count = var.create_logging_resource_group ? 1 : 0
 

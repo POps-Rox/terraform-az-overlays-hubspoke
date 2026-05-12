@@ -3,8 +3,8 @@
 
 resource "azurerm_network_security_group" "nsg" {
   name                = local.spoke_nsg_name
-  location            = module.mod_spoke_rg.0.resource_group_location
-  resource_group_name = module.mod_spoke_rg.0.resource_group_name
+  location            = module.mod_spoke_rg[0].resource_group_location
+  resource_group_name = module.mod_spoke_rg[0].resource_group_name
   tags = merge(var.tags, {
     DeployedBy = format("AzureNoOpsTF [%s]", terraform.workspace)
   })
@@ -19,7 +19,7 @@ resource "azurerm_network_security_rule" "deny_all_inbound" {
   for_each = toset(var.deny_all_inbound ? ["enabled"] : [])
 
   name                        = "deny-all-inbound"
-  resource_group_name         = module.mod_spoke_rg.0.resource_group_name
+  resource_group_name         = module.mod_spoke_rg[0].resource_group_name
   access                      = "Deny"
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.nsg.name
@@ -35,7 +35,7 @@ resource "azurerm_network_security_rule" "http_inbound" {
   for_each = toset(var.http_inbound_allowed ? ["enabled"] : [])
 
   name                        = "http-inbound"
-  resource_group_name         = module.mod_spoke_rg.0.resource_group_name
+  resource_group_name         = module.mod_spoke_rg[0].resource_group_name
   access                      = "Allow"
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.nsg.name
@@ -52,7 +52,7 @@ resource "azurerm_network_security_rule" "https_inbound" {
   for_each = toset(var.https_inbound_allowed ? ["enabled"] : [])
 
   name                        = "https-inbound"
-  resource_group_name         = module.mod_spoke_rg.0.resource_group_name
+  resource_group_name         = module.mod_spoke_rg[0].resource_group_name
   access                      = "Allow"
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.nsg.name
@@ -69,7 +69,7 @@ resource "azurerm_network_security_rule" "ssh_inbound" {
   for_each = toset(var.ssh_inbound_allowed ? ["enabled"] : [])
 
   name                        = "ssh-inbound"
-  resource_group_name         = module.mod_spoke_rg.0.resource_group_name
+  resource_group_name         = module.mod_spoke_rg[0].resource_group_name
   access                      = "Allow"
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.nsg.name
@@ -86,7 +86,7 @@ resource "azurerm_network_security_rule" "rdp_inbound" {
   for_each = toset(var.rdp_inbound_allowed ? ["enabled"] : [])
 
   name                        = "rdp-inbound"
-  resource_group_name         = module.mod_spoke_rg.0.resource_group_name
+  resource_group_name         = module.mod_spoke_rg[0].resource_group_name
   access                      = "Allow"
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.nsg.name
@@ -103,7 +103,7 @@ resource "azurerm_network_security_rule" "winrm_inbound" {
   for_each = toset(var.winrm_inbound_allowed ? ["enabled"] : [])
 
   name                        = "winrm-inbound"
-  resource_group_name         = module.mod_spoke_rg.0.resource_group_name
+  resource_group_name         = module.mod_spoke_rg[0].resource_group_name
   access                      = "Allow"
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.nsg.name
@@ -120,7 +120,7 @@ resource "azurerm_network_security_rule" "appgw_health_probe_inbound" {
   for_each = toset(var.application_gateway_rules_enabled ? ["enabled"] : [])
 
   name                        = "appgw-health-probe-inbound"
-  resource_group_name         = module.mod_spoke_rg.0.resource_group_name
+  resource_group_name         = module.mod_spoke_rg[0].resource_group_name
   access                      = "Allow"
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.nsg.name
@@ -136,7 +136,7 @@ resource "azurerm_network_security_rule" "lb_health_probe_inbound" {
   for_each = toset(var.application_gateway_rules_enabled || var.load_balancer_rules_enabled ? ["enabled"] : [])
 
   name                        = "lb-health-probe-inbound"
-  resource_group_name         = module.mod_spoke_rg.0.resource_group_name
+  resource_group_name         = module.mod_spoke_rg[0].resource_group_name
   access                      = "Allow"
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.nsg.name
@@ -152,7 +152,7 @@ resource "azurerm_network_security_rule" "nfs_inbound" {
   for_each = toset(var.nfs_inbound_allowed ? ["enabled"] : [])
 
   name                        = "nfs-inbound"
-  resource_group_name         = module.mod_spoke_rg.0.resource_group_name
+  resource_group_name         = module.mod_spoke_rg[0].resource_group_name
   access                      = "Allow"
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.nsg.name
@@ -169,7 +169,7 @@ resource "azurerm_network_security_rule" "cifs_inbound" {
   for_each = toset(var.cifs_inbound_allowed ? ["enabled"] : [])
 
   name                        = "cifs-inbound"
-  resource_group_name         = module.mod_spoke_rg.0.resource_group_name
+  resource_group_name         = module.mod_spoke_rg[0].resource_group_name
   access                      = "Allow"
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.nsg.name
