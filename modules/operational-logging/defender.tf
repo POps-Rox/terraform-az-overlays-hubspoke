@@ -38,6 +38,8 @@ resource "azurerm_security_center_subscription_pricing" "main" {
 # Azure Security Center Contact Resources
 #----------------------------------------------------------
 resource "azurerm_security_center_contact" "main" {
+  # azurerm 4.x requires a `name`; in 3.x this was implicit ("default").
+  name                = lookup(var.security_center_contacts, "name", "default")
   email               = lookup(var.security_center_contacts, "email")
   phone               = lookup(var.security_center_contacts, "phone", null)
   alert_notifications = lookup(var.security_center_contacts, "alert_notifications", true)

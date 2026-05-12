@@ -5,15 +5,15 @@
 # Operations Logging Storage Account Creation
 #----------------------------------------------------------
 resource "azurerm_storage_account" "loganalytics_sa" {
-  name                      = local.ops_logging_sa_name
-  resource_group_name       = module.mod_logging_rg.0.resource_group_name
-  location                  = module.mod_logging_rg.0.resource_group_location
-  account_kind              = "StorageV2"
-  access_tier               = "Hot"
-  account_tier              = "Standard"
-  account_replication_type  = "GRS"
-  enable_https_traffic_only = true
-  tags                      = merge({ "ResourceName" = format("%s", local.ops_logging_sa_name) }, var.tags, )
+  name                       = local.ops_logging_sa_name
+  resource_group_name        = module.mod_logging_rg.0.resource_group_name
+  location                   = module.mod_logging_rg.0.resource_group_location
+  account_kind               = "StorageV2"
+  access_tier                = "Hot"
+  account_tier               = "Standard"
+  account_replication_type   = "GRS"
+  https_traffic_only_enabled = true
+  tags                       = merge({ "ResourceName" = format("%s", local.ops_logging_sa_name) }, var.tags, )
 }
 
 #---------------------------------------------------------

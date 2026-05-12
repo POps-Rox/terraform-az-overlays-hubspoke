@@ -5,10 +5,12 @@ resource "azurerm_route_table" "routetable" {
   depends_on = [
     module.mod_hub_rg
   ]
-  name                          = local.hub_rt_name
-  resource_group_name           = module.mod_hub_rg.0.resource_group_name
-  location                      = module.mod_hub_rg.0.resource_group_location
-  disable_bgp_route_propagation = var.disable_bgp_route_propagation
+  name                = local.hub_rt_name
+  resource_group_name = module.mod_hub_rg.0.resource_group_name
+  location            = module.mod_hub_rg.0.resource_group_location
+  # azurerm 4.x renamed `disable_bgp_route_propagation` to `bgp_route_propagation_enabled`
+  # and inverted its semantics. Module variable kept for backward compatibility.
+  bgp_route_propagation_enabled = !var.disable_bgp_route_propagation
   tags                          = var.tags
 }
 
