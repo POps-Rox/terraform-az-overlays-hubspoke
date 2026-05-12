@@ -1,5 +1,11 @@
+# tflint-ignore-file: terraform_unused_declarations
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
+#
+# Rationale: This file declares the root module's public input surface.
+# Several variables are accepted for forward/backward compatibility and are
+# not all wired into the current implementation. Tracked separately under
+# issue #10 (Phase 4 tflint remediation).
 
 
 ##########################

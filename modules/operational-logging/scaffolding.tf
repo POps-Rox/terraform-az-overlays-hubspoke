@@ -13,6 +13,7 @@ module "mod_azregions" {
 #---------------------------------------------------------
 # Resource Group Creation
 #----------------------------------------------------------
+# tflint-ignore: terraform_unused_declarations  # WIP: "use existing RG" path not wired downstream. See issue #12.
 data "azurerm_resource_group" "logging_rgrp" {
   count = var.create_logging_resource_group == false ? 1 : 0
   name  = var.custom_logging_resource_group_name

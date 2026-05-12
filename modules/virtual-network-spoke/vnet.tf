@@ -26,6 +26,7 @@ resource "azurerm_virtual_network" "spoke_vnet" {
 #-------------------------------------
 # Network Watcher - Default is "true"
 #-------------------------------------
+# tflint-ignore: terraform_unused_declarations  # WIP: NetworkWatcherRG lookup not yet referenced by downstream resources. See issue #12.
 data "azurerm_resource_group" "netwatch" {
   count = var.is_spoke_deployed_to_same_hub_subscription == true ? 1 : 0
   name  = "NetworkWatcherRG"

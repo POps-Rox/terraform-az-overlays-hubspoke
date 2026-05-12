@@ -1,5 +1,10 @@
+# tflint-ignore-file: terraform_unused_declarations
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
+#
+# Rationale: declared module input surface; several vars are forward-/backward-compat
+# placeholders or are tracked as deferred wire-up. See umbrella issue #10 and the
+# specific WIP follow-ups in issue #12.
 
 variable "hub_virtual_network_id" {
   description = "The ID of the hub virtual network to peer with the spoke virtual network."
