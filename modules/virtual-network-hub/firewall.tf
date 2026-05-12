@@ -9,13 +9,16 @@
 # Firewall Subnet Creation or selection
 #----------------------------------------------------------
 resource "azurerm_subnet" "fw_client_snet" {
-  count                                         = var.enable_firewall ? 1 : 0
-  name                                          = "AzureFirewallSubnet"
-  resource_group_name                           = module.mod_hub_rg.0.resource_group_name
-  virtual_network_name                          = azurerm_virtual_network.hub_vnet.name
-  address_prefixes                              = var.fw_client_snet_address_prefix
-  service_endpoints                             = var.fw_client_snet_service_endpoints
-  private_endpoint_network_policies_enabled     = var.fw_client_snet_private_endpoint_network_policies_enabled
+  count                = var.enable_firewall ? 1 : 0
+  name                 = "AzureFirewallSubnet"
+  resource_group_name  = module.mod_hub_rg.0.resource_group_name
+  virtual_network_name = azurerm_virtual_network.hub_vnet.name
+  address_prefixes     = var.fw_client_snet_address_prefix
+  service_endpoints    = var.fw_client_snet_service_endpoints
+  # azurerm 4.x replaced `private_endpoint_network_policies_enabled` (bool) with
+  # `private_endpoint_network_policies` (string enum). Module variable preserved (bool);
+  # converted at the resource boundary.
+  private_endpoint_network_policies             = var.fw_client_snet_private_endpoint_network_policies_enabled == null ? null : (var.fw_client_snet_private_endpoint_network_policies_enabled ? "Enabled" : "Disabled")
   private_link_service_network_policies_enabled = var.fw_client_snet_private_link_service_network_policies_enabled
 }
 
@@ -23,13 +26,14 @@ resource "azurerm_subnet" "fw_client_snet" {
 # Firewall Managemnet Subnet Creation
 #----------------------------------------------------------
 resource "azurerm_subnet" "fw_management_snet" {
-  count                                         = (var.enable_forced_tunneling && var.fw_management_snet_address_prefix != null) ? 1 : 0
-  name                                          = "AzureFirewallManagementSubnet"
-  resource_group_name                           = module.mod_hub_rg.0.resource_group_name
-  virtual_network_name                          = azurerm_virtual_network.hub_vnet.name
-  address_prefixes                              = var.fw_management_snet_address_prefix
-  service_endpoints                             = var.fw_management_snet_service_endpoints
-  private_endpoint_network_policies_enabled     = var.fw_management_snet_private_endpoint_network_policies_enabled
+  count                = (var.enable_forced_tunneling && var.fw_management_snet_address_prefix != null) ? 1 : 0
+  name                 = "AzureFirewallManagementSubnet"
+  resource_group_name  = module.mod_hub_rg.0.resource_group_name
+  virtual_network_name = azurerm_virtual_network.hub_vnet.name
+  address_prefixes     = var.fw_management_snet_address_prefix
+  service_endpoints    = var.fw_management_snet_service_endpoints
+  # See note above re: 4.x rename.
+  private_endpoint_network_policies             = var.fw_management_snet_private_endpoint_network_policies_enabled == null ? null : (var.fw_management_snet_private_endpoint_network_policies_enabled ? "Enabled" : "Disabled")
   private_link_service_network_policies_enabled = var.fw_management_snet_private_link_service_network_policies_enabled
 }
 
