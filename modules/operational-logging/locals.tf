@@ -13,14 +13,6 @@ resource "random_id" "uniqueString" {
   byte_length = 8
 }
 
-# The following block of locals are used to avoid using
-# empty object types in the code.
-locals {
-  empty_string = ""
-  empty_list   = []
-  empty_map    = {}
-}
-
 # Convert the input vars to locals, applying any required
 # logic needed before they are used in the module.
 # No vars should be referenced elsewhere in the module.

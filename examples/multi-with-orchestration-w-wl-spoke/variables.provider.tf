@@ -1,5 +1,9 @@
+# tflint-ignore-file: terraform_unused_declarations
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
+#
+# Rationale: provider-feature defaults for the (not-yet-wired) workload-spoke
+# azurerm.wl provider. Wire-up tracked in issue #12.
 
 variable "provider_azurerm_features_keyvault" {
   type = any

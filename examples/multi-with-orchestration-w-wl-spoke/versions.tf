@@ -118,6 +118,7 @@ provider "azurerm" {
   }
 }
 
+# tflint-ignore: terraform_unused_declarations  # WIP: workload-spoke azurerm.wl provider not yet wired into any module call. See issue #12.
 provider "azurerm" {
   alias           = "wl"
   environment     = "usgovernment"

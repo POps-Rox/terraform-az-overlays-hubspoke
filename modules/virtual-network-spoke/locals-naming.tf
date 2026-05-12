@@ -8,6 +8,7 @@ locals {
 
   spoke_vnet_name    = coalesce(var.spoke_vnet_custom_name, data.popsrox_resource_name.vnet.result)
   spoke_snet_name    = coalesce(var.spoke_snet_custom_name, data.popsrox_resource_name.snet.result)
+  # tflint-ignore: terraform_unused_declarations  # WIP: see issue #12 — private-endpoint subnet name not wired in.
   spoke_snet_pe_name = data.popsrox_resource_name.snet.result
   spoke_nsg_name     = coalesce(var.spoke_nsg_custom_name, data.popsrox_resource_name.nsg.result)
   spoke_rt_name      = coalesce(var.spoke_routtable_custom_name, data.popsrox_resource_name.rt.result)

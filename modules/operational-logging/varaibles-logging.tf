@@ -1,5 +1,10 @@
+# tflint-ignore-file: terraform_unused_declarations
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
+#
+# Rationale: filename is misspelled (varaibles -> variables) and some declared
+# variables are not wired into the module body. Rename + wire-up tracked in
+# issue #12 (subset of umbrella issue #10).
 
 ###########################
 # Logging Configuration  ##
