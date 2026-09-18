@@ -53,27 +53,27 @@ output "hub_default_subnet_name" {
 
 output "firewall_id" {
   description = "The ID of the Azure Firewall"
-  value       = azurerm_firewall.fw[0].id
+  value       = try(azurerm_firewall.fw[0].id, null)
 }
 
 output "public_ip_prefix_id" {
   description = "The id of the Public IP Prefix resource"
-  value       = azurerm_public_ip_prefix.fw-pref[0].id
+  value       = try(azurerm_public_ip_prefix.fw-pref[0].id, null)
 }
 
 output "firewall_public_ip" {
   description = "the public ip of firewall."
-  value       = azurerm_firewall.fw[0].ip_configuration[0].public_ip_address_id
+  value       = try(azurerm_firewall.fw[0].ip_configuration[0].public_ip_address_id, null)
 }
 
 output "firewall_private_ip" {
   description = "The private ip of firewall."
-  value       = azurerm_firewall.fw[0].ip_configuration[0].private_ip_address
+  value       = try(azurerm_firewall.fw[0].ip_configuration[0].private_ip_address, null)
 }
 
 output "firewall_name" {
   description = "The name of the Azure Firewall."
-  value       = azurerm_firewall.fw[0].name
+  value       = try(azurerm_firewall.fw[0].name, null)
 }
 
 output "virtual_hub_private_ip_address" {

@@ -6,7 +6,7 @@ terraform {
   required_providers {
     azurerm = {
       source                = "hashicorp/azurerm"
-      version               = "~> 4.20"
+      version               = ">= 5.0, < 6.0"
       configuration_aliases = [azurerm.hub_network]
     }
     popsrox = {
@@ -18,4 +18,8 @@ terraform {
       version = "~> 2.0"
     }
   }
+}
+
+provider "azurerm" {
+  alias = "hub_network"
 }
