@@ -51,8 +51,3 @@ resource "azurerm_security_center_setting" "main" {
   setting_name = var.security_center_setting_name
   enabled      = var.enable_security_center_setting
 }
-
-resource "azurerm_security_center_auto_provisioning" "main" {
-  count          = var.enable_security_center_auto_provisioning == "On" ? 1 : 0
-  auto_provision = var.enable_security_center_auto_provisioning
-}

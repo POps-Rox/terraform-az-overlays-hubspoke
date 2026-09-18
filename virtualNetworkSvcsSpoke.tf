@@ -27,8 +27,8 @@ module "mod_svcs_network" {
   location                   = var.location
   deploy_environment         = var.deploy_environment
   org_name                   = var.org_name
-  workload_name              = var.svcs_spoke_name != null ? var.svcs_spoke_name : "svcs-core"
-  custom_resource_group_name = var.custom_svcs_resource_group_name
+  workload_name              = try(trimspace(var.svcs_spoke_name) != "", false) ? var.svcs_spoke_name : "svcs-core"
+  custom_resource_group_name = try(trimspace(var.custom_svcs_resource_group_name) != "", false) ? var.custom_svcs_resource_group_name : null
 
   # Specify if you are deploying the spoke VNet using the same hub Azure subscription
   is_spoke_deployed_to_same_hub_subscription = var.is_svcs_deployed_to_same_hub_subscription

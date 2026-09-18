@@ -42,12 +42,17 @@ jobs:
       - name: Validate every Terraform directory
         run: |
           set -uo pipefail
-          # Every directory containing at least one .tf file - root module,
-          # nested submodules, examples at any depth, tests, infrastructure.
+          # Every supported directory containing at least one .tf file - root
+          # module, nested submodules, examples at any depth, and tests.
           mapfile -t dirs < <(find . -type f -name '*.tf' \
             -not -path '*/.terraform/*' -not -path '*/.git/*' \
+            -not -path './_wip/*' \
             -exec dirname {} \; | sort -u)
           echo "Discovered ${#dirs[@]} Terraform directories"
+          if [ "${#dirs[@]}" -eq 0 ]; then
+            echo "::error::No Terraform directories found."
+            exit 1
+          fi
           fail=0; ok=0
           for d in "${dirs[@]}"; do
             echo "::group::$d"
@@ -63,6 +68,26 @@ jobs:
           echo "validated OK : $ok"
           echo "FAILED       : $fail"
           exit $((fail > 0 ? 1 : 0))
+
+  terraform-test:
+    name: "🧪 Terraform Test"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.10.5"
+      - name: Run terraform test
+        run: |
+          set -uo pipefail
+          if ! ls tests/*.tftest.hcl >/dev/null 2>&1 && ! ls *.tftest.hcl >/dev/null 2>&1; then
+            echo "::error::No .tftest.hcl functional tests found."
+            exit 1
+          fi
+          terraform init -backend=false -no-color
+          terraform test -no-color
 
   tflint:
     name: "🔍 TFLint"

@@ -14,12 +14,18 @@ resource "azurerm_subnet" "fw_client_snet" {
   resource_group_name  = module.mod_hub_rg[0].resource_group_name
   virtual_network_name = azurerm_virtual_network.hub_vnet.name
   address_prefixes     = var.fw_client_snet_address_prefix
-  service_endpoints    = var.fw_client_snet_service_endpoints
   # azurerm 4.x replaced `private_endpoint_network_policies_enabled` (bool) with
   # `private_endpoint_network_policies` (string enum). Module variable preserved (bool);
   # converted at the resource boundary.
   private_endpoint_network_policies             = var.fw_client_snet_private_endpoint_network_policies_enabled == null ? null : (var.fw_client_snet_private_endpoint_network_policies_enabled ? "Enabled" : "Disabled")
   private_link_service_network_policies_enabled = var.fw_client_snet_private_link_service_network_policies_enabled
+
+  dynamic "service_endpoint" {
+    for_each = toset(var.fw_client_snet_service_endpoints)
+    content {
+      service = service_endpoint.value
+    }
+  }
 }
 
 #---------------------------------------------------------
@@ -31,10 +37,16 @@ resource "azurerm_subnet" "fw_management_snet" {
   resource_group_name  = module.mod_hub_rg[0].resource_group_name
   virtual_network_name = azurerm_virtual_network.hub_vnet.name
   address_prefixes     = var.fw_management_snet_address_prefix
-  service_endpoints    = var.fw_management_snet_service_endpoints
   # See note above re: 4.x rename.
   private_endpoint_network_policies             = var.fw_management_snet_private_endpoint_network_policies_enabled == null ? null : (var.fw_management_snet_private_endpoint_network_policies_enabled ? "Enabled" : "Disabled")
   private_link_service_network_policies_enabled = var.fw_management_snet_private_link_service_network_policies_enabled
+
+  dynamic "service_endpoint" {
+    for_each = toset(var.fw_management_snet_service_endpoints)
+    content {
+      service = service_endpoint.value
+    }
+  }
 }
 
 #------------------------------------------
@@ -168,5 +180,4 @@ resource "azurerm_firewall_nat_rule_collection" "fw" {
     translated_port       = each.value.rule.translated_port
   }
 } */
-
 

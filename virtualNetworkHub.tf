@@ -24,8 +24,8 @@ module "mod_hub_network" {
   location                   = var.location
   deploy_environment         = var.deploy_environment
   org_name                   = var.org_name
-  workload_name              = var.hub_custom_name != null ? var.hub_custom_name : "hub-core"
-  custom_resource_group_name = var.custom_hub_resource_group_name
+  workload_name              = try(trimspace(var.hub_custom_name) != "", false) ? var.hub_custom_name : "hub-core"
+  custom_resource_group_name = try(trimspace(var.custom_hub_resource_group_name) != "", false) ? var.custom_hub_resource_group_name : null
 
   // Hub Virtual Network Parameters  
   virtual_network_address_space = var.hub_vnet_address_space
